@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damshair</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        margin: 0px;
+        background-image: url("https://i.postimg.cc/23RLVRP3/image.png");
+        background-size: cover;
+        background-position: left center;
+        background-attachment: fixed;
+    }
+        body .main {
+            background: rgba(000, 000, 000, 0.7);
+            min-height: 100vh;
+        }
+    .hero {
+        width: 100%;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0px 30px;
+    }
+        .hero .title {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 40px;
+            font-weight: 1000;
+            color: #f356e8;
+        }
+        .hero .socials {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+            .hero .socials a img {
+                height: 30px;
+                width: 30px;
+                margin-right: 15px;
+                transition: transform 0.2s ease-in-out;
+            }
+            .hero .socials a img:hover {
+                transform: scale(1.2);
+            }
+
+    .appointment {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        padding: 30px;
+    }
+        .appointment .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .appointment .form p {
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+        }
+        .appointment .form .input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+            .appointment .form .input input, button{
+                padding: 8px 10px;
+                height: 30px;
+                min-width: 120px;
+                border-radius: 2px;
+                border: none;
+            }
+            .appointment .form .input button{
+                background-color: #f356e8;
+                border: none;
+                font-size: 12px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                filter: brightness(0.7);
+                transition: 0.4 ease-in-out filter;
+            }
+            .appointment .form .input button:hover {
+                filter: brightness(1);
+            }
+        .appointment .list {
+            height: 400px;
+            overflow-y: auto;
+            background: rgba(000, 000, 000, 0.5);
+            border-radius: 20px;
+            box-shadow: 2px 2px 5px rgba(163,177,198,0.5), -2px -2px 5px rgba(255, 255, 255, 0.6);
+        }
+            .appointment .list h1 {
+                color: #fff;
+                text-align: center;
+                position: sticky;
+                top: 0px;
+                padding: 10px;
+                background: #000;
+                border-radius: 20px;
+            }
+            .appointment .list .list_item {
+                /* background-color: #fff; */
+            box-shadow: inset -2px -2px 5px rgba(163,177,198,0.5), inset 2px 2px 5px rgba(255, 255, 255, 0.6);
+                color: #fff;
+                /* color: #f356e8; */
+                margin: 10px;
+                padding: 10px 15px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-radius: 10px;
+            }
+</style>
+<body>
+    <div class="main">
+        <div class="hero">
+            <div class="title">Damshair</div>
+            <div class="socials">
+                <a href="http://whatsapp.com" target="_blank" rel="noopener noreferrer"><img src="https://api.iconify.design/logos:whatsapp-icon.svg?color=%23888888" alt="Twitter"></a>
+                <a href="http://instagram.com" target="_blank" rel="noopener noreferrer"><img src="https://api.iconify.design/cib:instagram.svg?color=%23888888" alt="Instagram"></a>
+            </div>
+        </div>
+        <div class="appointment">
+            <div class="form">
+                <p>Do you want to schedule an appointment with Damshair?</p>
+                <form class="input">
+                    <input type="text" id="name" placeholder="Name" required>
+                    <input type="date" id="date" required>
+                    <input type="time" id="time" required>
+                    <button id="schedule">Schedule</button>
+                </form>
+            </div>
+            <div class="list">
+                <h1>Current Schedule</h1>
+            </div>
+        </div>
+    </div>
+    <script>
+        let schedule = [
+            {
+                name: "John Doe",
+                date: "2022-09-23",
+                time: "1:30"
+            },
+            {
+                name: "Jane Doe",
+                date: "2022-10-11",
+                time: "3:00"
+            },
+            {
+                name: "Danny Thompson",
+                date: "2022-01-02",
+                time: "2:10"
+            }
+        ]
+        const listTag = document.querySelector('.list') 
+        const scheduleBtn = document.querySelector('#schedule') 
+        const nameInput = document.querySelector('#name') 
+        const dateInput = document.querySelector('#date') 
+        const timeInput = document.querySelector('#time') 
+        window.addEventListener("load", () => {
+            schedule.map(item => {
+                createListItem(item.name, item.date, item.time)
+            })
+
+            scheduleBtn.addEventListener("click", () => {
+                if ( nameInput.value !== "" && dateInput.value !== "" && timeInput.value !== "" ) {
+                    createListItem(nameInput.value, dateInput.value, timeInput.value)
+    
+                    nameInput.value = ""
+                    dateInput.value = ""
+                    timeInput.value = ""
+                }
+            })
+        })
+
+        const createListItem = (name, date, time) => {
+            let newPTag = document.createElement('p')
+            let newSpan1 = document.createElement('span')
+            let newSpan2 = document.createElement('span')
+            newPTag.classList.add("list_item")
+            newSpan1.innerHTML = name
+            newSpan2.innerHTML = `${date} - ${time}`
+            newPTag.appendChild(newSpan1)
+            newPTag.appendChild(newSpan2)
+            listTag.appendChild(newPTag)
+        }
+    </script>
+</body>
+</html>
